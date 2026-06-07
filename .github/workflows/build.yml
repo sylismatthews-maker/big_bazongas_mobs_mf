@@ -14,10 +14,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build Mod File
+      - name: Compile Java Files
+        run: |
+          mkdir -p build/classes
+          javac -d build/classes DumbMovieMod.java CustomWaifuMobEntity.java client/ClientModEvents.java client/renderer/CustomWaifuMobRenderer.java
+
+      - name: Package Jar
         run: |
           mkdir -p build/libs
-          jar cvf build/libs/dumbmovie-1.0.jar com/ CustomWaifuMobEntity.java DumbMovieMod.java client/
+          jar cvf build/libs/dumbmovie-1.0.jar -C build/classes .
           
       - name: Upload Mod Artifact
         uses: actions/upload-artifact@v4
